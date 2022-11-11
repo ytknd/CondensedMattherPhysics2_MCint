@@ -5,7 +5,7 @@
 
 int main (void) {
 
-    long int sampling_number = 100000000000;
+    long int sampling_number = 1000000;
     double x, y, n, S, r = 1.0;
 
     init_genrand((unsigned)time(NULL));
