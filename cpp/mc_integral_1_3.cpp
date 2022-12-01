@@ -20,7 +20,7 @@ int main () {
         y = rand (engine);
         z = rand (engine);
 
-        if ((x * x + y * y + z * z) < radius) {
+        if ((x + y + z) < radius) {
             sampled_plots += 1.0;
             x_plot.push_back(x);
             y_plot.push_back(y);
@@ -28,11 +28,11 @@ int main () {
         }
     }
 
-    integrate_volume = sampled_plots / attempts * 8.0;
+    integrate_volume = sampled_plots / attempts;
 
     std::cout << integrate_volume << std::endl;
 
-    std::ofstream ofs ("mc_integral_3d_sphere.txt");
+    std::ofstream ofs ("mc_integral_1_3.txt");
     if (!ofs) {
         std::cerr <<"Fail to file open!" <<std::endl;
         std::exit(1);
