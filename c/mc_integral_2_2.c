@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-#include "MT.h"
 
 double Integrand (double variable_integration) {
     return exp (- variable_integration * variable_integration);
@@ -11,11 +10,11 @@ double Integrand (double variable_integration) {
 int main (void) {
     int i, attempts = 100000;
     double x, y, S, count_into_range, ratio_into_range;
-    init_genrand ((unsigned) time (NULL));
+    srand((unsigned int) time (NULL));
 
     for (i = 0; i < attempts; i++) {
-        x = genrand_real1 ();
-        y = genrand_real1 ();
+        x = (double)rand() / RAND_MAX;
+        y = (double)rand() / RAND_MAX;
 
         if (y < Integrand (x)) {
             count_into_range++;

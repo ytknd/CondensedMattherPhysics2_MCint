@@ -1,20 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "MT.h"
 
 int main (void) {
 
     int sampling_number = 1000000;
     double x, y, z, n, S, r = 1.0;
 
-    init_genrand((unsigned)time(NULL));
+    srand((unsigned int)time(NULL));
 
     for (int i = 0; i < sampling_number; i++) {
 
-        x = genrand_real1();
-        y = genrand_real1();
-        z = genrand_real1();
+        x = (double)rand() / RAND_MAX;
+        y = (double)rand() / RAND_MAX;
+        z = (double)rand() / RAND_MAX;
 
         if (y < (x * x) && y > (x * x * x) && (y * y) > z) {
 
