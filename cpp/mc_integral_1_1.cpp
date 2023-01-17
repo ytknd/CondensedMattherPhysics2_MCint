@@ -9,6 +9,7 @@ int main () {
     int attempts = 1000000;
     double x, y, z, sampled_plots, integrate_surface;
     std::vector<double> x_plot, y_plot;
+    FILE *gp;
 
     std::random_device seed_gen;
     std::mt19937 engine (seed_gen());
@@ -31,14 +32,22 @@ int main () {
 
     std::cout << integrate_surface << std::endl;
 
-    std::ofstream ofs ("result_1_1.txt");
-    if (!ofs) {
-        std::cerr << "Fail to file open!" << std::endl;
-        std::exit(1);
-    }
+    gp = popen("gnuplot", "w");
+    fprintf(gp, "set terminal png\n");
+    fprintf(gp, "set terminal png size %d,%d\n", 600, 600);
+    fprintf(gp, "set output \"mc_integral_1_1.png\"\n");
+    fprintf(gp, "set xrange[%f:%f]\n", INTERVAL_MIN, INTERVAL_MAX);
+    fprintf(gp, "set yrange[%f:%f]\n", INTERVAL_MIN, INTERVAL_MAX);
+    fprintf(gp, "set xlabel \"X\"\n");
+    fprintf(gp, "set ylabel \"Y\"\n");
 
+    fprintf(gp, "plot x * x lc rgb \"red\", x * x * x lc rgb \"red\", '-' with points pt 0 lc rgb \"orange\"\n");
     for (int i = 0; i < x_plot.size(); i++) {
-        ofs << x_plot.at(i) << "\t" << y_plot.at(i) << std::endl;
+        fprintf(gp, "%f\t%f\n", x_plot.at(i), y_plot.at(i));
     }
+    fprintf(gp, "e\n");
+
+    fflush(gp);
+    pclose(gp);
 }
 
